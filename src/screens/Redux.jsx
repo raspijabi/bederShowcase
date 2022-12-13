@@ -1,11 +1,37 @@
-import React from 'react'
-import { View, Text, SafeAreaView, Image, StyleSheet } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import React, { useEffect } from 'react'
+import { View, Text, SafeAreaView, Image, StyleSheet, Alert } from 'react-native'
 import { useSelector } from 'react-redux'
 
 export const Redux = () => {
 
     const { filmName, releaseDate, imgPath } = useSelector(state => state.api)
-    console.log(imgPath)
+    const navigation = useNavigation()
+
+    useEffect(() => {
+        if (filmName === '' || releaseDate === '' || imgPath === '')
+            showAlert()
+    }, [])
+
+    const showAlert = () => {
+        Alert.alert(
+            "No data found",
+            '',
+            [
+                { text: "OK" }
+            ],
+            {
+                cancelable: true,
+            }
+        )
+        navigation.goBack()
+    }
+    if(filmName === '' || releaseDate === '' || imgPath === ''){
+        return(
+            <>
+            </>
+        )
+    }
 
     return (
         <SafeAreaView>
